@@ -1,14 +1,12 @@
 import {useContext} from "react";
-import {Context} from "@/app/page"
+import {MessageContext} from "@/app/page"
 export default function MessageView()
 {
-    const {messageID}=useContext(Context);
-    if(messageID==="null")
-        return (
-            <div className="w-lvw h-dvh bg-blue-400">
-                Please choose a conversation
-            </div>
-        )
-    else
-        return (<div>hello to folk</div>)
+    const context=useContext(MessageContext);
+    if(!context)
+        return <div className="w-lvw h-dvh bg-blue-400 flex justify-center items-center">
+            Please choose a conversation!
+        </div>
+
+    return (<div>group chat {context.messageID}</div>)
 }
