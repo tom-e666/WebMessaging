@@ -1,8 +1,9 @@
 import {NextRequest, NextResponse} from "next/server";
 
 export async function GET(){
+    const data=process.env.FIREBASECONFIG;
     return NextResponse.json(
-        { message: "Welcome to the Education!" },
+        { message: `${data}` },
         {status: 200}
     );
 }
@@ -28,3 +29,4 @@ export async function POST(req: NextRequest){
         return NextResponse.json({error:"Something went wrong"},{status:200});
     }
 }
+const path=process.env["FIREBASECONFIG"];
