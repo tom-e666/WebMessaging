@@ -1,5 +1,6 @@
 import {useContext} from "react";
 import {MessageContext} from "@/app/page"
+
 export default function MessageView()
 {
     const context=useContext(MessageContext);

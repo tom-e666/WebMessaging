@@ -1,7 +1,7 @@
 import {NextRequest, NextResponse} from "next/server";
-
+import connectToMongoDB from "@/lib/mongodb"
 export async function GET(){
-    const data=process.env.FIREBASECONFIG;
+    const data= await connectToMongoDB;
     return NextResponse.json(
         { message: `${data}` },
         {status: 200}
