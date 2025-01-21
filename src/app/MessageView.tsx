@@ -9,5 +9,5 @@ export default function MessageView()
             Please choose a conversation!
         </div>
 
-    return (<div>group chat {context.messageID}</div>)
+    return (<div>group chat {context.ChatRoomID}</div>)
 }

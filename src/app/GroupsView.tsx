@@ -49,7 +49,7 @@ function GroupsView(){
                     {badgeData.map((item, index) => (
                         <li key={index}
                             className={`flex w-full bg-amber-200 p-1 ${selectedBadge===index ? "bg-blue-400" : "bg-white"} hover:bg-blue-400`}
-                        onClick={()=>{setSelectedBadge(index);chatContext!.setMessageID(badgeData[index].chatId)}}>
+                        onClick={()=>{setSelectedBadge(index);chatContext!.setChatRoomID(badgeData[index].chatId)}}>
                             <div className="w-10 h-1 0 rounded-full">
                                 <Image src={item.imgPath} width="15" height="15" alt="image title"/>
                             </div>

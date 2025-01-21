@@ -4,7 +4,7 @@ import {signInWithEmailAndPassword,createUserWithEmailAndPassword } from "fireba
 import {auth} from "@/lib/firebase"
 import Form from "next/form";
 
-export function Page (){
+export default function Page (){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isVisible, setIsVisible] = useState(true);
@@ -17,6 +17,7 @@ export function Page (){
             await signInWithEmailAndPassword(auth,email,password);
             console.log("Successfully logged in");
             //what should we do next? store confidential info and reroute?
+
         }
         catch(e){
             console.log("login failed",e);
@@ -25,7 +26,7 @@ export function Page (){
     const handleSignUp = async () => {
         try {
             await createUserWithEmailAndPassword (auth,email,password);
-            console.log("Successfully sign in");
+            console.log("Successfully sign up");
         } catch(e)
         {
             console.log("error sign up");
@@ -78,14 +79,6 @@ export function Page (){
                 </div>
                 <p>* Login in or sign up means you have accepted our terms</p>
             </div>
-
-        </div>
-    )
-}
-export default function content() {
-    return (
-        <div className="w-screen h-screen bg-white">
-            <Page/>
         </div>
     )
 }
