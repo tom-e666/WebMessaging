@@ -2,8 +2,6 @@
 import {useEffect, useRef, useState} from "react";
 import {signInWithEmailAndPassword,createUserWithEmailAndPassword } from "firebase/auth"
 import {auth} from "@/lib/firebase"
-import Form from "next/form";
-
 export default function Page (){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -17,6 +15,7 @@ export default function Page (){
             await signInWithEmailAndPassword(auth,email,password);
             console.log("Successfully logged in");
             //what should we do next? store confidential info and reroute?
+
 
         }
         catch(e){

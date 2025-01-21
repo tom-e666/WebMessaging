@@ -3,6 +3,7 @@ import React, {createContext} from "react";
 import GroupsView from "@/app/GroupsView";
 import MessageView from "@/app/MessageView";
 import LogForm from "@/app/login"
+import {AuthContext,GroupContext} from "@/app/context";
 type MessageContextType = {
     ChatRoomID:string;
     userID:string;
@@ -29,7 +30,8 @@ export default function Home() {
                 {refreshKey>=1 && <LogForm key={refreshKey}/>}
         </div>)
     return (
-        <>
+        <GroupContext value={null}>
+        <AuthContext value={null}>
         <MessageContext.Provider value={{ChatRoomID,userID,setChatRoomID,setUserID}}>
             {useCase === "Initial" &&
                 <div className="flex"   >
@@ -37,7 +39,8 @@ export default function Home() {
                     <MessageView></MessageView>
                 </div>}
         </MessageContext.Provider>
-        </>
+        </AuthContext>
+        </GroupContext>
     )
 }
 export {MessageContext}
