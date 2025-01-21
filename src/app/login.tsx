@@ -13,6 +13,7 @@ export function Page (){
     const handleLogin = async () => {
         try
         {
+
             await signInWithEmailAndPassword(auth,email,password);
             console.log("Successfully logged in");
             //what should we do next? store confidential info and reroute?
