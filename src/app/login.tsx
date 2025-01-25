@@ -2,21 +2,24 @@
 import {useEffect, useRef, useState} from "react";
 import {signInWithEmailAndPassword,createUserWithEmailAndPassword } from "firebase/auth"
 import {auth} from "@/lib/firebase"
+import {useAuthContext} from "@/app/context";
+
 export default function Page (){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isVisible, setIsVisible] = useState(true);
     const formRef= useRef<HTMLDivElement>(null);
+    const {setContext}=useAuthContext();
 
     const handleLogin = async () => {
         try
         {
-
-            await signInWithEmailAndPassword(auth,email,password);
-            console.log("Successfully logged in");
-            //what should we do next? store confidential info and reroute?
-
-
+            console.log(email);
+            console.log(password);
+            await signInWithEmailAndPassword(auth,email,password).then(userCredentials => {
+                setContext(userCredentials.user);
+            });
+            setIsVisible(false);
         }
         catch(e){
             console.log("login failed",e);
@@ -24,11 +27,14 @@ export default function Page (){
     }
     const handleSignUp = async () => {
         try {
-            await createUserWithEmailAndPassword (auth,email,password);
+            await createUserWithEmailAndPassword (auth,email,password).then(userCredentials => {
+                setContext(userCredentials.user);
+            })
             console.log("Successfully sign up");
+            setIsVisible(false);
         } catch(e)
         {
-            console.log("error sign up");
+            console.log("error signing up",e);
         }
     }
     useEffect(() => {

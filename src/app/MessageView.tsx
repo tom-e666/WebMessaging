@@ -1,13 +1,17 @@
-import {useContext} from "react";
-import {MessageContext} from "@/app/page"
+
+import {useChatContext} from "@/app/context";
+import {isEmpty} from "@firebase/util";
 
 export default function MessageView()
 {
-    const context=useContext(MessageContext);
-    if(!context)
+    const {context:ChatContext} = useChatContext();
+    if(!!ChatContext && !isEmpty(ChatContext) && ('groupID' in ChatContext))
         return <div className="w-lvw h-dvh bg-blue-400 flex justify-center items-center">
-            Please choose a conversation!
+            {ChatContext['groupID']}
         </div>
+    return <div className="w-lvw h-dvh bg-blue-400 flex justify-center items-center">
+        Please find for yourself a conversation
+    </div>
 
-    return (<div>group chat {context.ChatRoomID}</div>)
+
 }

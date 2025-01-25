@@ -1,14 +1,13 @@
 'use client'
-import React, {useContext, useEffect} from "react";
+import React, { useEffect} from "react";
 import Image from 'next/image';
-import {MessageContext} from "@/app/page"
+import {useAuthContext,useChatContext} from "@/app/context";
+
 function GroupsView(){
     const [badgeData,setBadgeData] = React.useState<BadgeData[]>([]);
     const [selectedBadge,setSelectedBadge]= React.useState<number>(-1);
-    const chatContext=useContext(MessageContext);
-    if(!chatContext){
-        console.log("can context is not provided!")
-    }
+    const {context:authContext}=useAuthContext();
+    const {setContext:setChatContext} = useChatContext();
     useEffect(() => {
         //handle obtaining data
 
@@ -21,7 +20,6 @@ function GroupsView(){
                 chatId:'2',
             imgPath:'/file.svg',
             title:'Sample',
-
         },
             {
                 chatId:'3',
@@ -49,7 +47,7 @@ function GroupsView(){
                     {badgeData.map((item, index) => (
                         <li key={index}
                             className={`flex w-full bg-amber-200 p-1 ${selectedBadge===index ? "bg-blue-400" : "bg-white"} hover:bg-blue-400`}
-                        onClick={()=>{setSelectedBadge(index);chatContext!.setChatRoomID(badgeData[index].chatId)}}>
+                        onClick={()=>{setSelectedBadge(index);setChatContext({groupID:badgeData[index]})}}>
                             <div className="w-10 h-1 0 rounded-full">
                                 <Image src={item.imgPath} width="15" height="15" alt="image title"/>
                             </div>
