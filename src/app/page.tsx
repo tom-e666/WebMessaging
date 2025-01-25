@@ -3,10 +3,18 @@ import React, {useEffect} from "react";
 import GroupsView from "@/app/GroupsView";
 import MessageView from "@/app/MessageView";
 import LogForm from "@/app/login"
-import {AuthProvider,useAuthContext} from "@/app/context";
+import {AuthProvider, ChatProvider, useAuthContext} from "@/app/context";
 import {isEmpty} from "@firebase/util";
-
-export default function Home() {
+export default function Page(){
+    return(
+        <AuthProvider>
+            <ChatProvider>
+                <Home/>
+            </ChatProvider>
+        </AuthProvider>
+    )
+}
+function Home() {
     const [refreshKey, setRefreshKey] = React.useState<number>(0);
     const {context} = useAuthContext();
     useEffect(() => {
@@ -14,7 +22,7 @@ export default function Home() {
     }, [context]);
     if(isEmpty(context))
         return (
-            <AuthProvider>
+
             <div className="w-screen h-screen bg-gradient-to-br from-purple-900 via-pink-900 to-blue-900 flex items-center justify-center flex-col ">
                     <p className="font-serif text-blue-200 text-2xl">Let's have a talk!</p>
                     <button
@@ -24,16 +32,13 @@ export default function Home() {
                     >let's go</button>
                 {refreshKey>=1 && <LogForm key={refreshKey}/>}
         </div>
-            </AuthProvider>
         )
     return (
-        <AuthProvider>
-                <div className="flex"   >
+
+                <div className="flex flex-row"   >
                 <GroupsView></GroupsView>
                     <MessageView></MessageView>
                 </div>
-        </AuthProvider>
     )
-
 }
 

@@ -9,8 +9,7 @@ export default function Page (){
     const [password, setPassword] = useState('');
     const [isVisible, setIsVisible] = useState(true);
     const formRef= useRef<HTMLDivElement>(null);
-    const {setContext}=useAuthContext();
-
+    const {context,setContext}=useAuthContext();
     const handleLogin = async () => {
         try
         {
@@ -30,7 +29,7 @@ export default function Page (){
             await createUserWithEmailAndPassword (auth,email,password).then(userCredentials => {
                 setContext(userCredentials.user);
             })
-            console.log("Successfully sign up");
+            console.log("Successfully sign up",context);
             setIsVisible(false);
         } catch(e)
         {

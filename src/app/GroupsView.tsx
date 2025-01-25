@@ -6,28 +6,29 @@ import {useAuthContext,useChatContext} from "@/app/context";
 function GroupsView(){
     const [badgeData,setBadgeData] = React.useState<BadgeData[]>([]);
     const [selectedBadge,setSelectedBadge]= React.useState<number>(-1);
-    const {context:authContext}=useAuthContext();
-    const {setContext:setChatContext} = useChatContext();
+
+    const {context:chatContext,setContext:setChatContext} = useChatContext();
+    console.log(chatContext);
     useEffect(() => {
         //handle obtaining data
 
         setBadgeData([{
-            chatId:'1',
+            groupID:'1',
             imgPath:'/file.svg',
             title:'Sample',
         },
             {
-                chatId:'2',
+                groupID:'2',
             imgPath:'/file.svg',
             title:'Sample',
         },
             {
-                chatId:'3',
+                groupID:'3',
                 imgPath:'/file.svg',
                 title:'Sample',
             },
             {
-                chatId:'4',
+                groupID:'4',
                 imgPath:'/file.svg',
                 title:'Sample',
             },
@@ -47,7 +48,7 @@ function GroupsView(){
                     {badgeData.map((item, index) => (
                         <li key={index}
                             className={`flex w-full bg-amber-200 p-1 ${selectedBadge===index ? "bg-blue-400" : "bg-white"} hover:bg-blue-400`}
-                        onClick={()=>{setSelectedBadge(index);setChatContext({groupID:badgeData[index]})}}>
+                        onClick={()=>{setSelectedBadge(index);setChatContext((context:object)=>{return {...context,groupID:badgeData[index].groupID}})}}>
                             <div className="w-10 h-1 0 rounded-full">
                                 <Image src={item.imgPath} width="15" height="15" alt="image title"/>
                             </div>
@@ -55,7 +56,6 @@ function GroupsView(){
                                 <div className="text-small font-bold text-black overflow-x-hidden">{item.title}</div>
                                 <div>
                                     <div className="text-small text-black overflow-x-hidden">some sample</div>
-
                                 </div>
                             </div>
                         </li>
@@ -67,7 +67,7 @@ function GroupsView(){
     )
 }
 interface BadgeData{
-    chatId:string,
+    groupID:string,
     imgPath:string,
     title:string,
 }
