@@ -1,14 +1,13 @@
 'use client'
 import React, { useEffect} from "react";
 import Image from 'next/image';
-import {useAuthContext,useChatContext} from "@/app/context";
+import {useChatContext} from "@/app/context";
 
 function GroupsView(){
     const [badgeData,setBadgeData] = React.useState<BadgeData[]>([]);
     const [selectedBadge,setSelectedBadge]= React.useState<number>(-1);
 
-    const {context:chatContext,setContext:setChatContext} = useChatContext();
-    console.log(chatContext);
+    const {setContext:setChatContext} = useChatContext();
     useEffect(() => {
         //handle obtaining data
 
@@ -48,7 +47,7 @@ function GroupsView(){
                     {badgeData.map((item, index) => (
                         <li key={index}
                             className={`flex w-full bg-amber-200 p-1 ${selectedBadge===index ? "bg-blue-400" : "bg-white"} hover:bg-blue-400`}
-                        onClick={()=>{setSelectedBadge(index);setChatContext((context:object)=>{return {...context,groupID:badgeData[index].groupID}})}}>
+                        onClick={()=>{setSelectedBadge(()=>(index));setChatContext((context:object)=>({...context,groupID:badgeData[index].groupID}))}}>
                             <div className="w-10 h-1 0 rounded-full">
                                 <Image src={item.imgPath} width="15" height="15" alt="image title"/>
                             </div>

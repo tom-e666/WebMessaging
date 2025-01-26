@@ -1,6 +1,12 @@
 'use client'
 import {useEffect, useRef, useState} from "react";
-import {signInWithEmailAndPassword,createUserWithEmailAndPassword } from "firebase/auth"
+import {
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    setPersistence,
+    browserSessionPersistence,
+
+} from "firebase/auth"
 import {auth} from "@/lib/firebase"
 import {useAuthContext} from "@/app/context";
 
@@ -15,9 +21,10 @@ export default function Page (){
         {
             console.log(email);
             console.log(password);
-            await signInWithEmailAndPassword(auth,email,password).then(userCredentials => {
+            await setPersistence(auth, browserSessionPersistence);
+            await signInWithEmailAndPassword(auth,email, password).then(userCredentials => {
                 setContext(userCredentials.user);
-            });
+            })
             setIsVisible(false);
         }
         catch(e){

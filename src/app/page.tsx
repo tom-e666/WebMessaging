@@ -5,6 +5,8 @@ import MessageView from "@/app/MessageView";
 import LogForm from "@/app/login"
 import {AuthProvider, ChatProvider, useAuthContext} from "@/app/context";
 import {isEmpty} from "@firebase/util";
+import {onAuthStateChanged} from "firebase/auth";
+import {auth} from "@/lib/firebase";
 export default function Page(){
     return(
         <AuthProvider>
@@ -16,10 +18,20 @@ export default function Page(){
 }
 function Home() {
     const [refreshKey, setRefreshKey] = React.useState<number>(0);
-    const {context} = useAuthContext();
+    const {context,setContext} = useAuthContext();
     useEffect(() => {
-        console.log(context);
-    }, [context]);
+        const unsubscribe= onAuthStateChanged(auth,(user)=>{
+            if(user)
+            {
+                setContext(user);
+            }else
+            {
+                setContext({});
+            }
+        })
+        return ()=> unsubscribe();
+
+    }, [auth,context]);
     if(isEmpty(context))
         return (
 
