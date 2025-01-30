@@ -1,32 +1,20 @@
+//post create user
 import {NextRequest, NextResponse} from "next/server";
-import connectToMongoDB from "@/lib/mongodb"
-export async function GET(){
-    const data= await connectToMongoDB;
-    return NextResponse.json(
-        { message: `${data}` },
-        {status: 200}
-    );
-}
-export async function POST(req: NextRequest){
+import {createUser} from "@/lib/firebaseUtils";
+
+export async function POST(req:NextRequest)
+{
+
     try {
-        const body= await req.json();
-        if(!body.name || !body.email)
-        {
-            return NextResponse.json(
-                {error: "Please enter a valid email address"},
-            {status:400}
-            );
-        }
-        const user ={
-            id:Date.now(),
-            name:body.name,
-            email:body.email,
-        };
-        return NextResponse.json(user,{status:200});
-    }catch (error)
+        const data= await req.json();
+        if(!data.name)
+            return NextResponse.json({error:"Missing name"},{status:400});
+        const user=await createUser(data);
+        return NextResponse.json({success:true,user},{status:201});
+
+    }catch(e)
     {
-        console.log(error);
-        return NextResponse.json({error:"Something went wrong"},{status:200});
+        console.log(`${e}`);
+        return NextResponse.json({error:"Internal Server Error"},{status:500});
     }
 }
-const path=process.env["FIREBASECONFIG"];

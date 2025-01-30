@@ -1,6 +1,7 @@
 import { getApp, getApps} from "@firebase/app";
 import {initializeApp} from "firebase/app";
-import {getAuth,setPersistence,browserSessionPersistence } from "firebase/auth"
+import {getAuth } from "firebase/auth"
+import {getFirestore} from "@firebase/firestore";
 const firebaseConfig = {
     apiKey: "AIzaSyA0z9N2y06xbZTD7NC1YwTy-54SOXt4Ws4",
     authDomain: "messaging-9b844.firebaseapp.com",
@@ -14,6 +15,6 @@ const firebaseConfig = {
 
 const app= !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const auth= getAuth(app);
-
-export {app, auth};
+const db=getFirestore(app)
+export {app, auth,db};
 

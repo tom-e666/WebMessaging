@@ -19,27 +19,27 @@ export default function Page(){
 function Home() {
     const [refreshKey, setRefreshKey] = React.useState<number>(0);
     const {context,setContext} = useAuthContext();
-    useEffect(() => {
-        const unsubscribe= onAuthStateChanged(auth,(user)=>{
-            if(user)
-            {
-                setContext(user);
-            }else
-            {
-                setContext({});
-            }
-        })
-        return ()=> unsubscribe();
-
-    }, [auth,context]);
+    // useEffect(() => {
+    //     const unsubscribe= onAuthStateChanged(auth,(user)=>{
+    //         if(user)
+    //         {
+    //             setContext(user);
+    //         }else
+    //         {
+    //             setContext({});
+    //         }
+    //     })
+    //     return ()=> unsubscribe();
+    //
+    // }, [auth,context]);
     if(isEmpty(context))
         return (
 
             <div className="w-screen h-screen bg-gradient-to-br from-purple-900 via-pink-900 to-blue-900 flex items-center justify-center flex-col ">
-                    <p className="font-serif text-blue-200 text-2xl">Let's have a talk!</p>
+                    <p className="font-serif text-blue-200 text-2xl">'Let's have a talk!</p>
                     <button
                         type="button"
-                        onClick={()=>{setRefreshKey(refreshKey+1)}}
+                        onClick={()=>{setRefreshKey(refreshKey+1);console.log(refreshKey)}}
                         className="bg-blue-400 items-center content-center rounded px-5 py-1.5"
                     >let's go</button>
                 {refreshKey>=1 && <LogForm key={refreshKey}/>}
